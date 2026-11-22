@@ -1,0 +1,343 @@
+# 邀请有效时间（秒）。
+invite-timeout-seconds: 60
+
+# 对局结束后保留最终棋盘的时间（秒）。
+end-display-seconds: 3
+
+# 从 DeluxeMenus 等外部菜单打开 GamePaper 匹配 UI 时的最大等待时间（tick）。
+# 1 tick = 0.05 秒；默认 2 tick。设置为 0 时下一 tick 立即打开。
+# 如果外部菜单带有延迟关闭动作，可适当调大，最大按 40 tick 处理。
+game-gui:
+  external-menu-wait-ticks: 2
+
+# 随机物品柱子生存游戏配置。
+random-game:
+  # 最多 6 人；实际人数还受 spawn-points 数量限制。
+  max-players: 6
+  item-interval-seconds: 10
+  countdown-seconds: 10
+  # 对局开始后等待多久启用随机事件；默认 180 秒（3 分钟）。
+  event-start-delay-seconds: 180
+  # 随机事件启用后，每隔多久随机触发一个事件；默认 90 秒。
+  event-interval-seconds: 90
+
+  # 游戏进行中允许使用的指令根名称。game 默认保留，便于使用 /game random leave。
+  command-whitelist:
+    - game
+    - msg
+    - tell
+    - w
+    - r
+    - reply
+
+  # 最多配置 6 个重生点。坐标应位于柱子顶部，并且必须在 boundary 内。
+  spawn-points:
+    - world: world
+      x: -15.5
+      y: 100.0
+      z: -15.5
+    - world: world
+      x: 15.5
+      y: 100.0
+      z: -15.5
+    - world: world
+      x: -15.5
+      y: 100.0
+      z: 15.5
+    - world: world
+      x: 15.5
+      y: 100.0
+      z: 15.5
+    - world: world
+      x: 0.5
+      y: 100.0
+      z: -15.5
+    - world: world
+      x: 0.5
+      y: 100.0
+      z: 15.5
+
+  # 游戏边界，同时也是开局清理范围；范围内只有黑曜石方块会保留。
+  boundary:
+    world: world
+    min-x: -32
+    max-x: 32
+    min-y: 0
+    max-y: 128
+    min-z: -32
+    max-z: 32
+
+  # 在随机物品池中额外排除的物品名称。所有刷怪蛋（包括飞行生物刷怪蛋）都会自动排除。
+  excluded-materials:
+    - BEDROCK
+    - END_PORTAL_FRAME
+    - OBSIDIAN
+    - CRYING_OBSIDIAN
+    - BARRIER
+    - COMMAND_BLOCK
+    - CHAIN_COMMAND_BLOCK
+    - REPEATING_COMMAND_BLOCK
+    - STRUCTURE_BLOCK
+    - STRUCTURE_VOID
+    - JIGSAW
+    - LIGHT
+    - SPAWNER
+    - DEBUG_STICK
+    - KNOWLEDGE_BOOK
+    - REINFORCED_DEEPSLATE
+
+# PVP 占点游戏配置。
+pvp-game:
+  # 两支队伍争夺下方配置的中心区域，先达到 winning-score 的队伍获胜。
+  max-players: 12
+  winning-score: 10
+  capture-seconds: 10
+  start-countdown-seconds: 10
+  respawn-protection-seconds: 5
+  # 占点区域连续无人达到该秒数后，红蓝两队的占领计时会同时增长。
+  empty-zone-seconds: 20
+
+  # 游戏进行中允许使用的指令前缀；默认只允许当前游戏指令 /game pvp。
+  # 可额外填写 msg、tell 等指令根名，或填写 game pvp 这样的完整游戏前缀。
+  command-whitelist:
+    - game pvp
+
+  team-spawns:
+    red:
+      # 红队所有玩家共用这个重生点。
+      world: world
+      x: -12.5
+      y: 100.0
+      z: 0.5
+      yaw: 90.0
+      pitch: 0.0
+    blue:
+      # 蓝队所有玩家共用这个重生点。
+      world: world
+      x: 13.5
+      y: 100.0
+      z: 0.5
+      yaw: -90.0
+      pitch: 0.0
+
+  boundary:
+    world: world
+    min-x: -32
+    max-x: 32
+    min-y: 0
+    max-y: 128
+    min-z: -32
+    max-z: 32
+
+  capture-zone:
+    world: world
+    x: 0.5
+    y: 100.0
+    z: 0.5
+    radius: 5.0
+    min-y: 95.0
+    max-y: 105.0
+
+  classes:
+    assault:
+      # 突进距离（方块）。
+      dash-distance: 10.0
+      # 突击技能再次充能所需时间（秒）。
+      skill-cooldown-seconds: 30
+      golden-apples: 2
+      weapon:
+        material: STONE_SWORD
+        amount: 1
+        remaining-durability: 32
+        unbreakable: false
+        knockback: 0
+      armor:
+        material: IRON_HELMET
+        unbreakable: true
+      spectral-arrows: 0
+    supply:
+      # 补给是持续生效的被动技能，没有技能冷却时间。
+      support-radius: 3.0
+      # 队友每隔多少秒获得一个金苹果。
+      apple-interval-seconds: 3
+      # 队友在补给职业附近时，每隔多少 tick 修复一点非不可破坏装备耐久。
+      repair-interval-ticks: 3
+      golden-apples: 0
+      weapon:
+        material: WOODEN_SWORD
+        amount: 1
+        remaining-durability: 0
+        unbreakable: true
+        knockback: 1
+      armor:
+        material: LEATHER
+        unbreakable: true
+      spectral-arrows: 0
+    sniper:
+      # 狙击技能命中后，敌军发光和队友加速的持续时间。
+      glowing-seconds: 5
+      speed-seconds: 10
+      # 右键技能给予队友的速度等级，0 代表速度 I；设为 0 秒可关闭该 Buff。
+      speed-amplifier: 0
+      # 双击空格向后突进的距离（方块）。
+      back-dash-distance: 5.0
+      skill-cooldown-seconds: 30
+      golden-apples: 0
+      weapon:
+        material: BOW
+        amount: 1
+        remaining-durability: 32
+        unbreakable: false
+        knockback: 0
+      armor:
+        material: LEATHER
+        unbreakable: true
+      spectral-arrows: 32
+
+# TNT 烫手山芋游戏配置。
+tnt-game:
+  # 最大玩家数量可自行配置；实际人数还受 spawn-points 数量限制。
+  max-players: 5
+  # 玩家进入游戏后先等待 10 秒，期间可以自由移动。
+  start-countdown-seconds: 10
+  # 每轮 TNT 持有时间。
+  round-seconds: 30
+  # 一名玩家被淘汰后，下一轮开始前的冷却时间。
+  cooldown-seconds: 5
+
+  # 可配置任意数量的进入游戏时重生位置，每名玩家使用一个位置。
+  spawn-points:
+    - world: world
+      x: -15.5
+      y: 100.0
+      z: -15.5
+    - world: world
+      x: 15.5
+      y: 100.0
+      z: -15.5
+    - world: world
+      x: -15.5
+      y: 100.0
+      z: 15.5
+    - world: world
+      x: 15.5
+      y: 100.0
+      z: 15.5
+    - world: world
+      x: 0.5
+      y: 100.0
+      z: 0.5
+
+  # 游戏范围；玩家不能离开，范围内不会自然生成生物。
+  boundary:
+    world: world
+    min-x: -32
+    max-x: 32
+    min-y: 0
+    max-y: 128
+    min-z: -32
+    max-z: 32
+
+# 谁是卧底游戏配置。
+undercover-game:
+  # 固定上限为 6；实际人数还受有效 spawn-points 数量限制。
+  max-players: 6
+  # 每名玩家填写说辞的时间；超时会自动提交一本写有“超时未填写”的书。
+  description-seconds: 60
+  # 每轮投票持续时间；未在时限内投票视为弃权。
+  voting-seconds: 20
+
+  # DeepSeek 每轮新词功能。API 请求为异步，不会阻塞服务器主线程。
+  # API Key 不会出现在日志中；推荐仅在服务器私有配置中填写并限制文件权限。
+  # 请求失败、返回格式错误或重复词时会最多重试 3 次，随后自动回退本地题库。
+  ai:
+    enabled: false
+    api-key: ""
+    base-url: "https://api.deepseek.com"
+    model: "deepseek-v4-flash"
+    timeout-seconds: 15
+
+    # 可随时修改的 DeepSeek 系统提示词。
+    # 必须要求模型保留 civilian 和 undercover 两个 JSON 字段，否则插件无法解析。
+    system-prompt: |-
+      你是“谁是卧底”小游戏的创意词语设计师。你必须只输出一个 JSON 对象，不能输出 Markdown、解释或额外字段。
+      固定 JSON 格式：{"civilian":"平民词","undercover":"卧底词"}
+
+      设计要求：
+      1. 两个词必须是简体中文常见名词或短语，每个 1 至 8 个汉字，不能完全相同。
+      2. 两者要有一个可描述的共同点，但真实类别、用途、气味、形状、场景或联想应存在有趣反差。
+      3. 重点是让玩家仅看自己的词时难以反推出另一个词；避免苹果/梨、可乐/雪碧、猫/狗这类同类别近义配对。
+      4. 鼓励荒诞但可理解的组合，例如“香蕉”和“狗粑粑”：外形或颜色有联系，但类别差异很大，描述时容易产生误导和笑点。
+      5. 不得包含人身攻击、歧视、色情、政治敏感、违法或危险内容；轻微厕所幽默可以。
+      6. 不要重复用户给出的历史词语或历史词组。
+      7. 输出必须可由 JSON 解析器直接解析，示例：{"civilian":"香蕉","undercover":"狗粑粑"}
+
+    # 每次生成时发送的用户提示词。支持以下变量：
+    # {round}=当前轮数；{used_words}=已使用词语；{used_pairs}=已使用词组。
+    round-prompt: |-
+      请为第 {round} 轮生成一组全新的、有反差且有趣的词。
+      不得使用以下历史词：{used_words}
+      不得重复以下历史词组：{used_pairs}
+      只输出固定 JSON：{"civilian":"平民词","undercover":"卧底词"}
+
+  # 最多读取前 6 个位置。游戏开始后玩家会被固定在各自位置。
+  spawn-points:
+    - world: world
+      x: -5.5
+      y: 100.0
+      z: -5.5
+      yaw: 0.0
+      pitch: 0.0
+    - world: world
+      x: 0.5
+      y: 100.0
+      z: -5.5
+      yaw: 0.0
+      pitch: 0.0
+    - world: world
+      x: 5.5
+      y: 100.0
+      z: -5.5
+      yaw: 0.0
+      pitch: 0.0
+    - world: world
+      x: -5.5
+      y: 100.0
+      z: 5.5
+      yaw: 180.0
+      pitch: 0.0
+    - world: world
+      x: 0.5
+      y: 100.0
+      z: 5.5
+      yaw: 180.0
+      pitch: 0.0
+    - world: world
+      x: 5.5
+      y: 100.0
+      z: 5.5
+      yaw: 180.0
+      pitch: 0.0
+
+  # 本地回退题库；未启用 AI 或 DeepSeek 请求失败时使用。
+  words:
+    - civilian: 苹果
+      undercover: 梨
+    - civilian: 牛奶
+      undercover: 豆浆
+    - civilian: 可乐
+      undercover: 雪碧
+    - civilian: 火锅
+      undercover: 烧烤
+    - civilian: 雨伞
+      undercover: 雨衣
+    - civilian: 公交车
+      undercover: 地铁
+    - civilian: 电影
+      undercover: 电视剧
+    - civilian: 手机
+      undercover: 平板电脑
+    - civilian: 篮球
+      undercover: 足球
+    - civilian: 猫
+      undercover: 狗

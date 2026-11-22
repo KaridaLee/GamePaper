@@ -1,0 +1,35 @@
+name: GamePaper
+version: '0.7.0'
+main: com.gamepaper.tictactoe.GamePaperPlugin
+author: GamePaper
+description: 包含井字棋、五子棋、随机物品、TNT 烫手山芋、谁是卧底与 PVP 占点的 Paper 小游戏插件
+api-version: '26.2'
+commands:
+  game:
+    description: GamePaper 小游戏主命令
+    usage: /game <ttt|gomuku|random|tnt|undercover|pvp|gui|reload> <操作>
+    aliases:
+      - games
+  ttt:
+    description: 邀请玩家进行井字棋
+    usage: /ttt <invite|accept|deny|board|leave|cancel|help>
+    aliases:
+      - tictactoe
+      - 井字棋
+  gomoku:
+    description: 邀请玩家进行五子棋
+    usage: /gomoku <invite|accept|deny|review|board|leave|cancel|help>
+    aliases:
+      - gobang
+      - wuziqi
+      - gomuku
+permissions:
+  gamepaper.reload:
+    description: 重载 GamePaper 配置
+    default: op
+  gamepaper.gui.others:
+    description: 为指定玩家打开 GamePaper 小游戏匹配 UI
+    default: op
+  gamepaper.undercover.debug:
+    description: 调试生成谁是卧底 DeepSeek 词组
+    default: op
